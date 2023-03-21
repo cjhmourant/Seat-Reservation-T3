@@ -7,7 +7,7 @@ import { api } from "~/utils/api";
 import { type ReactElement } from "react";
 
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: "from your da" });
+  const username = api.user.getById.useQuery("clfis22hq000k3b6lucid4jwe");
 
   return (
     <>
@@ -47,7 +47,8 @@ const Home: NextPage = () => {
           </div>
           <div className="flex flex-col items-center gap-2">
             <p className="text-2xl text-white">
-              {hello.data ? hello.data.greeting : "Loading tRPC query..."}
+              {username?.data?.name &&
+                `the first user in the database is ${username.data.name}`}
             </p>
             <AuthShowcase />
           </div>
