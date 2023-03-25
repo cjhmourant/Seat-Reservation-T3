@@ -7,7 +7,11 @@
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "db-seed": "NODE_ENV=development prisma db seed"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@marco-polo/button": "^2.0.0",
@@ -25,6 +29,7 @@
     "react-dom": "18.2.0",
     "styled-components": "^5.3.9",
     "superjson": "1.9.1",
+    "tsx": "^3.12.6",
     "zod": "^3.20.6"
   },
   "devDependencies": {
