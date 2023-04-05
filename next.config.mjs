@@ -16,7 +16,10 @@ const config = {
    */
   i18n: {
     locales: ["en"],
-    defaultLocale: "en",
+    defaultLocale: "en"
   },
+  compiler: {
+    styledComponents: true
+  }
 };
 export default config;
