@@ -1,6 +1,9 @@
 import React from "react";
 import * as Styled from "./styles";
 
-export const SeatButton = () => {
-  return <Styled.SeatButton />;
+type SeatButtonProps = {
+  seatNumber: string;
+};
+export const SeatButton = ({ seatNumber }: SeatButtonProps) => {
+  return <Styled.SeatButton>{seatNumber}</Styled.SeatButton>;
 };

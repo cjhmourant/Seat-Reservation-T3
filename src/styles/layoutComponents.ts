@@ -1,56 +1,65 @@
 import styled from "styled-components";
 
 export const Page = styled.div`
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column-reverse;
-  @media (min-width: 750px) {
+  // tablet styling
+  @media (min-width: 950px) {
+    flex-direction: row;
   }
 `;
 
 export const ResBar = styled.div`
-  @media (min-width: 750px) {
-    // Need this align-self so the sidebar remains sticky inside the flexbox
-    align-self: flex-start;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    width: 20rem;
+  height: 45vh;
+  border: solid red 1px;
+
+  @media (min-width: 950px) {
+    height: 100%;
+    min-width: 25rem;
   }
+`;
+
+export const MapArea = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: scroll;
 `;
 
 export const SeatGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(13, var(--mobile-seat-width));
-  grid-template-rows: repeat(10, var(--mobile-seat-height));
+  width: auto;
   overflow: scroll;
-  @media (min-width: 750px) {
-    // Set the columns and rows to fixed sizes for different viewports so scroll behaviour is activated
-    grid-template-columns: repeat(10, var(--desktop-seat-width));
-    grid-template-rows: repeat(13, var(--desktop-seat-width));
-    width: 60rem;
-    height: 80rem;
-    overflow: scroll;
+  --grid-column-width: var(--mobile-seat-width);
+  display: grid;
+  align-self: center;
+  grid-template-columns: repeat(13, var(--grid-column-width));
+  grid-template-rows: repeat(10, var(--grid-column-width));
+  padding: 2rem;
+
+  @media (min-width: 460px) {
+    --grid-column-width: var(--tablet-seat-width);
+  }
+
+  @media (min-width: 950px) {
+    --grid-column-width: var(--desktop-seat-width);
   }
 `;
 
-export const SeatOne = styled.div`
+type SeatProps = {
+  column: number;
+  row: number;
+};
+export const Seat = styled.div.attrs(
+  ({ column, row }: SeatProps): SeatProps => ({
+    column,
+    row,
+  })
+)`
   width: 100%;
   height: 100%;
-  grid-column: 1 / span 1;
-  grid-row: 10 / span 1;
-`;
-export const SeatTwo = styled.div`
-  width: 100%;
-  height: 100%;
-  grid-column: 1 / span 1;
-  grid-row: 9 / span 1;
-`;
-
-export const SeatTwentyFive = styled.div`
-  width: 100%;
-  height: 100%;
-  grid-column: 13 / span 1;
-  grid-row: 10 / span 1;
+  grid-column: ${(props) => props.column} / span 1;
+  grid-row: ${(props) => props.row} / span 1;
 `;
