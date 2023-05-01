@@ -2,6 +2,7 @@ import { type AppType } from "next/app";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "styled-components";
+// @ts-ignore
 import { GoCityTheme, GoCityGlobalStyle } from "@marco-polo/theme";
 import { api } from "~/utils/api";
 
@@ -14,6 +15,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
+      {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
       <ThemeProvider theme={GoCityTheme}>
         <GoCityGlobalStyle />
         <CssVariables />

@@ -1,4 +1,5 @@
-import styled from "styled-components";
+/* eslint-disable @typescript-eslint/no-unsafe-member-access*/
+import styled, { css } from "styled-components";
 
 export const Page = styled.div`
   height: 100vh;
@@ -12,8 +13,10 @@ export const Page = styled.div`
 `;
 
 export const ResBar = styled.div`
+  ${({ theme }) => css`
+    border: solid ${theme.colour.borders.onLight.default} 1px;
+  `}
   height: 45vh;
-  border: solid red 1px;
 
   @media (min-width: 950px) {
     height: 100%;

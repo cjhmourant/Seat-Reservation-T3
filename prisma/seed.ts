@@ -2,9 +2,7 @@ import { prisma } from "~/server/db";
 import * as process from "process";
 
 async function main() {
-  const seatNumbers = Array.from({ length: 25 }, (_, index) =>
-    (index + 1).toString()
-  );
+  const seatNumbers = Array.from({ length: 56 }, (_, index) => index + 1);
 
   const seatPromises = seatNumbers.map(
     async (seatNumber) =>

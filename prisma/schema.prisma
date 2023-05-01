@@ -27,7 +27,7 @@ model SeatBooking {
 
 model Seat {
   id          String        @id @default(cuid())
-  seatNumber  String        @unique
+  seatNumber  Int           @unique
   SeatBooking SeatBooking[]
 }
 
