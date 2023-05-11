@@ -37,6 +37,7 @@ export type DatePickerProps = Required<
     | "name"
     | "disabled"
     | "autoFocus"
+    | "excludeDates"
   > & {
     label: string;
     description?: string;

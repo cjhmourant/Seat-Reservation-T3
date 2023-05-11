@@ -15,11 +15,11 @@
   },
   "dependencies": {
     "@marco-polo/button": "^2.0.0",
-    "@marco-polo/date-picker": "^2.0.0",
+    "@marco-polo/date-picker": "2.1.0",
     "@marco-polo/icons": "^2.0.0",
     "@marco-polo/theme": "^2.0.0",
     "@next-auth/prisma-adapter": "^1.0.5",
-    "@prisma/client": "^4.12.0",
+    "@prisma/client": "^4.14.0",
     "@tanstack/react-query": "^4.20.2",
     "@trpc/client": "^10.9.0",
     "@trpc/next": "^10.9.0",
@@ -51,7 +51,7 @@
     "postcss": "^8.4.14",
     "prettier": "^2.8.1",
     "prettier-plugin-tailwindcss": "^0.2.1",
-    "prisma": "^4.13.0",
+    "prisma": "^4.14.0",
     "tailwindcss": "^3.2.0",
     "typescript": "^4.9.5"
   },

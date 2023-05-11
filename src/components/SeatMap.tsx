@@ -1,5 +1,8 @@
-import * as Layout from "../styles/layoutComponents";
-import { SeatButton } from "~/components/SeatButton";
+import styled from "styled-components";
+import { useSeatContext } from "~/utils/contextHooks/useSeatContext";
+import React from "react";
+import { useDateContext } from "~/utils/contextHooks/useDateContext";
+import { api } from "~/utils/api";
 
 const seatNumberToCoordinateMapping = {
   "1": { number: 1, column: 1, row: 10 },
@@ -60,12 +63,95 @@ const seatNumberToCoordinateMapping = {
   "56": { number: 56, column: 9, row: 1 },
 };
 
-export const SeatMap = () => (
-  <Layout.SeatGrid>
-    {Object.entries(seatNumberToCoordinateMapping).map(([seat, seatInfo]) => (
-      <Layout.Seat column={seatInfo.column} row={seatInfo.row} key={seat}>
-        <SeatButton seatNumber={seatInfo.number} />
-      </Layout.Seat>
-    ))}
-  </Layout.SeatGrid>
-);
+// Stop a user booking multiple seats on the same day
+
+export const SeatMap = () => {
+  const { selectedSeatNumber, setSelectedSeatNumber } = useSeatContext();
+  const { selectedDate } = useDateContext();
+  const { isSuccess: hasBookedSeats, data: bookedSeats } =
+    api.seatBooking.getNumbersOfSeatsBookedOnDate.useQuery(selectedDate);
+
+  return (
+    <SeatGrid>
+      {Object.entries(seatNumberToCoordinateMapping).map(([seat, seatInfo]) => (
+        <Seat
+          column={seatInfo.column}
+          row={seatInfo.row}
+          selected={seatInfo.number === selectedSeatNumber}
+          key={seat}
+          onClick={() => setSelectedSeatNumber(seatInfo.number)}
+          disabled={hasBookedSeats && bookedSeats.includes(seatInfo.number)}
+        >
+          {seatInfo.number}
+        </Seat>
+      ))}
+    </SeatGrid>
+  );
+};
+
+const SeatGrid = styled.div`
+  width: auto;
+  overflow: scroll;
+  --grid-column-width: var(--mobile-seat-width);
+  display: grid;
+  align-self: center;
+  grid-template-columns: repeat(13, var(--grid-column-width));
+  grid-template-rows: repeat(10, var(--grid-column-width));
+  padding: 2rem;
+
+  @media (min-width: 460px) {
+    --grid-column-width: var(--tablet-seat-width);
+  }
+
+  @media (min-width: 950px) {
+    --grid-column-width: var(--desktop-seat-width);
+  }
+`;
+
+type SeatProps = {
+  column: number;
+  row: number;
+  selected: boolean;
+};
+
+/* eslint-disable @typescript-eslint/no-unsafe-member-access*/
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+const Seat = styled.button.attrs<SeatProps>((attrs) => ({
+  column: attrs.column,
+  row: attrs.row,
+  selected: attrs.selected,
+  theme: attrs.theme,
+}))<SeatProps>`
+  width: 100%;
+  height: 100%;
+  grid-column: ${({ column }) => column} / span 1;
+  grid-row: ${({ row }) => row} / span 1;
+  transition: background-color 100ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    border 100ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    outline 100ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+
+  border: solid 5px
+    ${({ selected, theme }) =>
+      selected
+        ? theme.colour.surface.light.brandHighlight
+        : theme.colour.interaction.button.secondary.onLight.default.border};
+  border-radius: ${({ theme }) => theme.border.radius.md};
+
+  :hover {
+    border: solid 10px
+      ${({ selected, theme }) =>
+        selected
+          ? theme.colour.surface.light.brandHighlightAlt
+          : theme.colour.interaction.button.secondary.onLight.hover.border};
+  }
+
+  :disabled {
+    color: white;
+    border: solid 3px
+      ${({ theme }) =>
+        theme.colour.interaction.button.secondary.onLight.disabled.border};
+    background-color: ${({ theme }) =>
+      theme.colour.interaction.button.secondary.onLight.disabled.text};
+  }
+`;
