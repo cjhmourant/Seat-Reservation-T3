@@ -131,7 +131,7 @@ const Seat = styled.button.attrs<SeatProps>((attrs) => ({
     border 100ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
     outline 100ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 
-  border: solid 5px
+  border: solid ${({ selected }) => (selected ? "7px" : "5px")}
     ${({ selected, theme }) =>
       selected
         ? theme.colour.surface.light.brandHighlight
